@@ -28,6 +28,7 @@ local function write(type, time, msg, locale)
     if time ~= "N/A" then
         if string.sub(time,2,2) == ":" then time = "0"..time end
     end
+    time = string.sub(time,1,5)
 
     --read file and memorize it
     local file = fs.open(logPath,"r") 
@@ -47,18 +48,20 @@ end
 ---@param msg string    @message to log, defaults to "No message specified"
 ---@param locale string @timezone to read the time in (utc|local|ingame), defaults to "utc"
 ---@param time string   @formatted version of the unix time, defaults to the current time in the locale's environment
-local function verifyAndApplyDefaults(msg, locale, time)
+local function verifyAndApplyDefaults(msg, time, locale)
     msg = msg or "No message specified"
+
     locale = locale or "utc"
     time = time or textutils.formatTime(os.time(locale))
-    return msg, locale, time
+    
+    return msg, time, locale
 end
 
 
 
 --============= Public functions =============
 --- Send a notice to the log file
----@param msg string            @Message of the notice
+---@param msg  string            @Message of the notice
 ---@param time nil | string     @Formatted time
 ---@param locale nil | string   @Locale local|ingame|utc
 local function notice(msg, time, locale)
