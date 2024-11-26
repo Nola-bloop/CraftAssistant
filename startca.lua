@@ -8,6 +8,8 @@
 --fetch global variables
 require("craft-assistant.functionnal-files.globals")
 
+CA.logger.notice("Starting Craft Assistant")
+
 --init              find monitor and apply monitor add-on
 local monitor = CA.tools.addon(peripheral.wrap(CA.mainMonitor), CA.addons.monitor) 
     or CA.logger.warn("No monitor found. Running Craft assistant without UI.")

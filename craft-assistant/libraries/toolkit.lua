@@ -52,8 +52,6 @@ return  {
                 break
             end
         end
-        CA.log.debug(strStart)
-        CA.log.debug(strEnd)
 
         --replace the old value with the new one
         oldContents = string.sub(oldContents, 1, strStart)..value..string.sub(oldContents, strEnd, #oldContents)

@@ -1,7 +1,8 @@
-(w)[10:55 (utc)] : No monitor found. Running Craft assistant without UI.
-(w)[utc (10:54 PM)] : No monitor found. Running Craft assistant without UI.
-(w)[utc (10:52 PM)] : No monitor found. Running Craft assistant without UI.
-(w)[utc (10:49 PM)] : No monitor found. Running Craft assistant without UI.
-(w)[utc (10:46 PM)] : No monitor found. Running Craft assistant without UI.
-(n)[utc (10:41 PM)] : System was brought back to factory settings.
- 
+(n)[2024/11/26 (local)] : Starting Craft Assistant
+(n)[26/11/2024 (local)] : Starting Craft Assistant
+(n)[Tue Nov 26 18:44:02 2024 (local)] : Starting Craft Assistant
+(n)[Tue Nov 26 18:29:56 2024 (local)] : Main monitor side changed to right
+(w)[Tue Nov 26 18:29:50 2024 (local)] : No monitor found. Running Craft assistant without UI.
+(d)[Tue Nov 26 18:28:31 2024 (local)] : 313
+(d)[Tue Nov 26 18:28:31 2024 (local)] : 307
+(w)[Tue Nov 26 18:27:54 2024 (local)] : No monitor found. Running Craft assistant without UI.
