@@ -38,7 +38,6 @@ if peripheralsSerializedJson == "" or not peripheralsSerializedJson then
 end
 local peripheralsUnserializedJson = textutils.unserializeJSON(peripheralsSerializedJson) or CA.logger.crash("Unable to unserialize the connected peripherals file at "..CA.paths.peripherals)
 CA.peripherals = peripheralsUnserializedJson
-CA.logger.debug(textutils.serialiseJSON(CA.peripherals))
 local file = fs.open(CA.paths.peripherals, "w") or CA.log.crash("Unable to write in the peripheral file at "..CA.paths.peripherals)
 file.write(peripheralsSerializedJson)
 file.flush()
