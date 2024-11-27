@@ -10,12 +10,19 @@ CA = {
     toolkit = require("craft-assistant.libraries.toolkit"),
 
     --Constant variables (only refresh on reboot (maybe))
-    mainMonitor = "none", --side
+    mainMonitor = "right", --side
+    monitorScale = 0.5,
 
     --addons
     addons = {
         monitor = require("craft-assistant.libraries.addons.monitor-addon")
-    }
+    },
+
+    paths = {
+        caShell     = "/craft-assistant/ca-shell.lua",
+        globals     = "/craft-assistant/functionnal-files/globals.lua",
+        peripherals = "/craft-assistant/functionnal-files/peripherals.json"
+    },
 }
 
 --shorthands 

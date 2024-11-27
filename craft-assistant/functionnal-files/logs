@@ -1,5 +1,28 @@
-(w)[2024/11/26 (local)] : No monitor found. Running Craft assistant without UI.
+(d)[2024/11/27 17:06 (local)] : {"modems":{},"commands":{},"drives":{},"extensions":{},"speakers":{},"printers":{},"computers":{},"redstone_relays":{},"monitors":{}}
+(n)[2024/11/27 17:06 (local)] : Starting Craft Assistant
+(d)[2024/11/27 17:05 (local)] : {"modems":{},"commands":{},"drives":{},"extensions":{},"speakers":{},"printers":{},"computers":{},"redstone_relays":{},"monitors":{}}
+(n)[2024/11/27 17:05 (local)] : Starting Craft Assistant
+(d)[2024/11/27 17:05 (local)] : {"modems":{},"commands":{},"drives":{},"extensions":{},"speakers":{},"printers":{},"computers":{},"redstone_relays":{},"monitors":{}}
+(n)[2024/11/27 17:05 (local)] : Starting Craft Assistant
+(d)[2024/11/27 17:04 (local)] : {"modems":{},"commands":{},"drives":{},"extensions":{},"speakers":{},"printers":{},"computers":{},"redstone_relays":{},"monitors":{}}
+(n)[2024/11/27 17:04 (local)] : Starting Craft Assistant
+(d)[2024/11/27 16:57 (local)] : {"modems":{},"commands":{},"drives":{},"extensions":{},"speakers":{},"printers":{},"computers":{},"redstone_relays":{},"monitors":{}}
+(n)[2024/11/27 16:57 (local)] : Starting Craft Assistant
+(w)[2024/11/27 16:55 (local)] : Shutting down the pc...
+(c)[2024/11/27 16:55 (local)] : Unable to unserialize the connected peripherals file at /craft-assistant/functionnal-files/peripherals.lua
+(n)[2024/11/27 16:55 (local)] : Starting Craft Assistant
+(w)[2024/11/27 16:54 (local)] : Shutting down the pc...
+(c)[2024/11/27 16:54 (local)] : Unable to unserialize the connected peripherals file at /craft-assistant/functionnal-files/peripherals.lua
+(n)[2024/11/27 16:54 (local)] : Starting Craft Assistant
+(w)[2024/11/27 16:51 (local)] : Shutting down the pc...
+(c)[2024/11/27 16:51 (local)] : Unable to unserialize the connected peripherals file at /craft-assistant/functionnal-files/peripherals.lua
+(n)[2024/11/27 16:51 (local)] : Starting Craft Assistant
+(n)[2024/11/27 16:43 (local)] : Starting Craft Assistant
+(n)[2024/11/27 (local)] : Starting Craft Assistant
+(n)[2024/11/27 (local)] : Starting Craft Assistant
 (n)[2024/11/26 (local)] : Starting Craft Assistant
+(n)[2024/11/26 (local)] : Starting Craft Assistant
+(n)[2024/11/26 (local)] : Main monitor side changed to right
 (w)[2024/11/26 (local)] : No monitor found. Running Craft assistant without UI.
 (n)[2024/11/26 (local)] : Starting Craft Assistant
 (n)[2024/11/26 (local)] : Rebooting system due to reset...

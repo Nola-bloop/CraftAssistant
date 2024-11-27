@@ -48,7 +48,7 @@ local function verifyAndApplyDefaults(msg, datetime, locale)
 
     locale = locale or defaultLocale
     local time = os.epoch(locale) / 1000
-    datetime = datetime or os.date("%Y/%m/%d", time)
+    datetime = datetime or os.date("%Y/%m/%d %H:%M", time)
 
     return msg, datetime, locale
 end

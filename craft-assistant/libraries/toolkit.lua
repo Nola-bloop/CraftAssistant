@@ -7,6 +7,7 @@ return  {
     --- Append functions of an addon to a lua object. 
     --- example of use: 'local monitor = CA.toolkit.addon(peripheral.find("monitor"), CA.addons.monitor)'
     --- returns nil if a NOT NULL value is null
+    --- calls setup(target) if it is defined
     ---@param target any        @peripheral or object to apply the addon on. NOT NULL
     ---@param addon any         @addon to apply on the object. ALSO NOT NULL
     ---@param override boolean  @put to true to override the object's existing functions
@@ -20,6 +21,8 @@ return  {
             target[k] = v
             end
         end
+
+        if addon["setup"] ~= nil then addon.setup(target) end
         return target
     end,
 
