@@ -10,7 +10,7 @@ CA = {
     toolkit = require("craft-assistant.libraries.toolkit"),
 
     --Constant variables (only refresh on reboot (maybe))
-    mainMonitor = "right", --side
+    mainMonitor = "none", --side
 
     --addons
     addons = {

@@ -21,7 +21,7 @@ term.clear()
 term.setCursorPos(1,1)
 print("Craft Assistant V"..CA.ver) 
 if not monitor then
-    if not CA.mainMonitor or CA.mainMonitor == "setup" or CA.mainMonitor == "nil" or not monitor and CA.monitor ~= "none" then
+    if not CA.mainMonitor or CA.mainMonitor == "setup" or CA.mainMonitor == "nil" or not monitor and CA.mainMonitor ~= "none" then
         print("No monitor was set up or could not be found. Do you wish to bind one?(Y/n)")
         local input = string.sub(read(),1,1)
 
@@ -60,6 +60,4 @@ else
     local caShell = multishell.launch({require = require, CA = CA}, "/craft-assistant/ca-shell.lua")
     multishell.setTitle(caShell, "Craft Assistant")
     multishell.setFocus(caShell)
-
-    
 end

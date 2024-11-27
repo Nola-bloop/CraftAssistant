@@ -12,3 +12,7 @@ logFile.flush()
 logFile.close()
 
 CA.logger.notice("System was brought back to factory settings.")
+CA.logger.notice("Rebooting system due to reset...")
+print("Rebooting system due to reset in 3 seconds...")
+os.sleep(3)
+os.reboot()

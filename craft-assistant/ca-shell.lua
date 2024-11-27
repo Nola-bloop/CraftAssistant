@@ -1,20 +1,38 @@
 local function start()
     term:fullClear()
+
+    local commands = {}
+    commands = {
+        help = function()
+            for k, v in pairs(commands) do
+                print(k)
+            end
+        end,
+        version = function(self)
+            print("Craft Assistant V"..CA.ver)
+        end,
+        reboot = function(self)
+            CA.logger.warn("Command line triggered a controlled reboot.")
+            os.reboot()
+        end,
+        shutdown = function(self)
+            CA.logger.warn("Command line triggered a controlled shutdown.")
+            os.shutdown()
+        end,
+        ["factory reset"] = function(self)
+            print("Resetting Craft Assistant to factory settings...")
+            require("craft-assistant.factory-reset")
+        end
+    }
+
+    --shorthands
+    commands.ver = commands.version
+
     while true do
         term.write("ca # ")
         local input = read()
-
-        if input == "version" or input == "ver" then
-            print("Craft Assistant V"..CA.ver)
-        elseif input == "reboot" then
-            CA.logger.warn("Command line triggered a controlled reboot.")
-            os.reboot()
-        elseif input == "shutdown" then
-            CA.logger.warn("Command line triggered a controlled shutdown.")
-            os.shutdown()
-        elseif input == "factory reset" then
-            print("Resetting Craft Assistant to factory settings...")
-            require("craft-assistant.factory-reset")
+        if not commands[input] then print("unknown command '"..input.."'")
+        else commands[input]()
         end
     end
 end
