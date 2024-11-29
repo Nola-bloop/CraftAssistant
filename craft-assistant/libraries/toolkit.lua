@@ -28,8 +28,6 @@ return  {
 
 
 
-
-
     --- Searches a file for a table declaration and replaces the value to the specified one
     ---@param path string   @path to the file containing the table
     ---@param name string       @name of the variable whose value needs to be changed 
@@ -65,4 +63,18 @@ return  {
         file.flush()
         file.close()
     end,
+
+
+    --- counts the number of entries in a table
+    ---@param table table @table to count
+    count = function(table)
+        local count = 0;
+        if not table then return 0 end
+
+        for k, v in pairs(table) do
+            count = count + 1
+        end
+
+        return count
+    end
 }

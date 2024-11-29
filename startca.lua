@@ -16,7 +16,7 @@ require("craft-assistant.functionnal-files.globals")
 CA.logger.notice("Starting Craft Assistant")      
 --find monitor and apply monitor add-on
 CA.monitor = CA.tools.addon(peripheral.wrap(CA.mainMonitor), CA.addons.monitor) 
-    or CA.logger.warn("No monitor found. Running Craft assistant without UI.")
+    or CA.logger.warn("No monitor found. Running CLI.")
 --add monitor addon to terminal
 CA.tools.addon(term, CA.addons.monitor)
 --load peripherals

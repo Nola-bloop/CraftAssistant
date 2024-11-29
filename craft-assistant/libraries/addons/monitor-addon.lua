@@ -11,6 +11,8 @@
 
 local module = {}
 
+--- give the module constants
+---@param object object @should be self (target)
 function module.setup(object)
     object.size = {}
     object.mid = {}
@@ -19,11 +21,12 @@ function module.setup(object)
     object.mid.y = object.size.y/2
 end
 
-function module.fullClear(self, color, cursorX, cursorY)
+--- Complete a full clear of the monitor
+---@param self any
+---@param color color       @color to fill the monitor in
+function module.fullClear(self, color)
     --sanity checks
     color   = color     or colors.black
-    cursorX = cursorX   or 1
-    cursorY = cursorY   or 1
 
 
     self.setBackgroundColor(color)
@@ -33,31 +36,112 @@ end
 
 --- More complete monitor.write() function
 ---@param self any
----@param text string   @text to write
----@param x integer     @X position where to write
----@param y integer     @Y position where to write
----@param size integer  @Size to write in
+---@param text string       @text to write
+---@param pos table         @{x, y} position to write at
+---@param size integer      @Size to write in
 ---@param textColor color   @color of the text (e.g. colors.white)
 ---@param bgColor color     @color of the background
----@param endx integer
----@param endy integer
-function module.writeAt(self, text, x, y, size, textColor, bgColor, endx, endy)
+---@param wrap integer      @max characters on one line
+---@param pointToEnd boolean @put to true if the coordinates are pointing at the end of the text instead of the beginning
+function module.writeAt(self, text, pos, textColor, bgColor, wrap, pointToEnd)
     --sanity checks
-    x = x or 1
-    y = y or 1
+    pos.x = pos.x or 1
+    pos.y = pos.y or 1
+    if pointToEnd == nil then pointToEnd = false end
+
+    if pointToEnd then
+        if wrap and wrap > string.len(text) then
+            pos.x = pos.x-string.len(text)
+        end
+    end
 
     if bgColor then self.setBackgroundColor(bgColor) end
     if textColor then self.setTextColor(textColor) end
-    if size then self.setTextScale(size) end
-    self.setCursorPos(x,y)
-    self.write(text)
+    self.setCursorPos(pos.x, pos.y)
+    if wrap ~= nil and wrap < string.len(text) then
+        local fractions = {}
+        repeat
+            local space = string.len(text)
+            for i = 1, wrap do
+                if string.sub(text, i,i) == " " then
+                    space = i
+                end
+            end
+            table.insert(fractions, string.sub(text, 1, space-1))
+            if space == string.len(text) then break end
+            text = string.sub(text, space+1, string.len(text))
+        until string.len(text) < wrap
 
-    x, y = self.getCursorPos()
-    if endx then self.setCursorPos(endx, y) end
-    x, y = self.getCursorPos()
-    if endy then self.setCursorPos(x, endy) end
+        table.insert(fractions, text)
 
-    self.setTextScale(CA.monitorScale)
+        for i = 1, #fractions do
+            if pointToEnd then
+                self.setCursorPos(pos.x-string.len(fractions[i]),pos.y-1+i)
+            else
+                self.setCursorPos(pos.x,pos.y-1+i)
+            end
+            self.write(fractions[i])
+        end
+    else
+        self.write(text)
+    end
+end
+
+--- Draw a square at the specified coordinates in the given color
+---@param pos1 table    @{x, y} where to start drawing
+---@param pos2 table    @{x, y} where to end drawing
+---@param color color   @color to fill the square in
+---@param isHollow boolean @set to true if box must be hollow
+function module.drawBox(self, pos1, pos2, color, isHollow)
+    --nil checks
+    pos1.x = pos1.x or CA.log.crash("pos1.x cannot be nil: monitor-addon.drawSquare()")
+    pos2.x = pos2.x or CA.log.crash("pos2.x cannot be nil: monitor-addon.drawSquare()")
+    pos1.y = pos1.y or CA.log.crash("pos1.y cannot be nil: monitor-addon.drawSquare()")
+    pos2.y = pos2.y or CA.log.crash("pos2.y cannot be nil: monitor-addon.drawSquare()")
+    isHollow = isHollow or false
+
+    if pos1.x > pos2.x then CA.log.crash("pos1.x cannot be greater than pos2.x : monitor-addon.drawSquare()") end
+    if pos1.y > pos2.y then CA.log.crash("pos1.y cannot be greater than pos2.y : monitor-addon.drawSquare()") end
+
+    color = color or CA.log.crash("color cannot be nil: monitor-addon.drawSquare()")
+
+    local colorIsColor = false
+    for k, v in pairs(colors) do
+        if v == color then colorIsColor = true end
+    end
+    if not colorIsColor then CA.log.crash("color is not a color: monitor-addon.drawSquare()") end
+
+
+    self.setCursorPos(pos1.x,pos1.y)
+    self.setBackgroundColor(color)
+
+    for i = pos1.y, pos2.y do
+        self.setCursorPos(pos1.x,i)
+        for j = pos1.x, pos2.x do
+            if isHollow then
+                if i == pos1.y or i == pos2.y or j == pos1.x or j == pos2.x then
+                    self.setCursorPos(j,i)
+                    self.write(" ")
+                else
+
+                end
+            else
+                self.setCursorPos(j,i)
+                self.write(" ")
+            end
+        end
+    end
+
+end
+
+--- set the color palette of the monitor
+---@param self any
+---@param colorPalette table @table of colors to apply.
+function module.setColorPalette(self, colorPalette)
+    for k, v in pairs(colorPalette) do
+        self.setPaletteColor(colors[k], tonumber("0x"..colorPalette[k]))
+        term.setTextColor(colors[k])
+    end
 end
 
 return module
