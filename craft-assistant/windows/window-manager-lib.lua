@@ -1,5 +1,5 @@
 return {
-    drawTabs = function()
+    drawTabs = function(index)
         --draw tab container
         local tabs = {}
         local files = fs.list("/craft-assistant/windows/tabs/")
@@ -15,14 +15,31 @@ return {
         )
         for i = 1, #tabs do
             if CA.animations and CA.GUI.animations then os.sleep(0.1) end
-            CA.monitor:writeAt(
+            if index == i then
+                CA.monitor:writeAt(
+                tabs[i],
+                {x=1,y=CA.monitor.workspace.y+i},
+                colors.lime,
+                colors.magenta
+                )
+            else
+                CA.monitor:writeAt(
                 tabs[i],
                 {x=1,y=CA.monitor.workspace.y+i},
                 colors.purple,
                 colors.gray
-            )
+                )
+                CA.GUI.clickables[tabs[i]] = {
+                    x1=1, 
+                    y1=CA.monitor.workspace.y+i,
+                    x2 =string.len(tabs[i]),
+                    y2=CA.monitor.workspace.y+i,
+                    click = function()
+                        CA.GUI.currentTab = i
+                    end
+                }
+            end 
         end
-    
     end,
     touch = function(pos)
         for k, v in pairs(CA.GUI.clickables) do

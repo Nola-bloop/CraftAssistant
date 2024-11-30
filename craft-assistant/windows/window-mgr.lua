@@ -10,8 +10,10 @@ CA.monitor.setTextScale(CA.monitorScale)
 CA.GUI = {
     showTabs = false,
     animations = true,
+    tabs = {},
+    currentTab = 2,
     clickables = {
-        --obj = {x1, y1, x2, y2}
+        --obj = {x1, y1, x2, y2, click()}
     }
 }
 
@@ -26,7 +28,7 @@ local function refresh()
     require("craft-assistant.windows.partials.header")()
 
     --show tabs if open
-    if CA.GUI.showTabs then windows.drawTabs() end
+    if CA.GUI.showTabs then windows.drawTabs(CA.GUI.currentTab) end
 
     --print footer
     require("craft-assistant.windows.partials.footer")()

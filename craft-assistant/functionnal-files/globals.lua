@@ -14,7 +14,7 @@ CA = {
     toolkit = require("craft-assistant.libraries.toolkit"),
 
     --Constant variables (only refresh on reboot (maybe))
-    mainMonitor = "right", --side
+    mainMonitor = "top", --side
     monitorScale = 0.5,
     animations = true,
     colorPalette = {
