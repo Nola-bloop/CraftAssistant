@@ -52,6 +52,8 @@ function module.writeAt(self, text, pos, textColor, bgColor, wrap, pointToEnd)
     if pointToEnd then
         if wrap and wrap > string.len(text) then
             pos.x = pos.x-string.len(text)
+        else
+            pos.x = pos.x-string.len(text)
         end
     end
 

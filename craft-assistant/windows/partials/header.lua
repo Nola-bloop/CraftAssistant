@@ -40,10 +40,8 @@ return function()
         x2 = 1, 
         y2 = CA.monitor.workspace.y,
         click = function()
-            print("tabsButton clicked")
             if CA.GUI.showTabs then CA.GUI.showTabs = false
             else CA.GUI.showTabs = true end
-            print(CA.GUI.showTabs)
         end
     }
 end

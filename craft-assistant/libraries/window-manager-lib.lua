@@ -1,11 +1,5 @@
 return {
     drawTabs = function(index)
-        --draw tab container
-        local tabs = {}
-        local files = fs.list("/craft-assistant/windows/tabs/")
-        for k, v in pairs(files) do
-            tabs[k] = "> "..string.sub(v, 1, string.len(v)-4) --remove ".lua"
-        end
         
         CA.monitor:writeAt(
             "v   Tabs  ",
@@ -13,26 +7,27 @@ return {
             colors.black,
             colors.lightGray
         )
-        for i = 1, #tabs do
+        for i = 1, #CA.GUI.tabs do
             if CA.animations and CA.GUI.animations then os.sleep(0.1) end
             if index == i then
                 CA.monitor:writeAt(
-                tabs[i],
+                    "- "..CA.GUI.tabs[i],
                 {x=1,y=CA.monitor.workspace.y+i},
                 colors.lime,
                 colors.magenta
                 )
             else
                 CA.monitor:writeAt(
-                tabs[i],
+                    "> "..CA.GUI.tabs[i],
                 {x=1,y=CA.monitor.workspace.y+i},
                 colors.purple,
                 colors.gray
                 )
-                CA.GUI.clickables[tabs[i]] = {
+                CA.GUI.clickables[CA.GUI.tabs[i]] = {
+                    type="tab",
                     x1=1, 
                     y1=CA.monitor.workspace.y+i,
-                    x2 =string.len(tabs[i]),
+                    x2 =string.len(CA.GUI.tabs[i]),
                     y2=CA.monitor.workspace.y+i,
                     click = function()
                         CA.GUI.currentTab = i
