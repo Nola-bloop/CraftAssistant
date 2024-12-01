@@ -76,5 +76,17 @@ return  {
         end
 
         return count
+    end,
+
+    
+    --- find a value in a table.
+    ---@param table table @the table to run through
+    ---@param needle any @the value to find
+    ---@return any, nil @the index of the value
+    contains = function(table, needle)
+        for k, v in pairs(table) do
+            if needle == v then return k end
+        end
+        return
     end
 }

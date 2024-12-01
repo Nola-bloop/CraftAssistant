@@ -94,7 +94,8 @@ end
 ---@param pos2 table    @{x, y} where to end drawing
 ---@param color color   @color to fill the square in
 ---@param isHollow boolean @set to true if box must be hollow
-function module.drawBox(self, pos1, pos2, color, isHollow)
+---@param fill color @color to fill the box. will override isHollow if not null
+function module.drawBox(self, pos1, pos2, color, isHollow, fill)
     --nil checks
     pos1.x = pos1.x or CA.log.crash("pos1.x cannot be nil: monitor-addon.drawSquare()")
     pos2.x = pos2.x or CA.log.crash("pos2.x cannot be nil: monitor-addon.drawSquare()")
@@ -134,6 +135,15 @@ function module.drawBox(self, pos1, pos2, color, isHollow)
         end
     end
 
+    if fill then
+        self.setBackgroundColor(fill)
+        for i = pos1.y+1, pos2.y-1 do
+            for j = pos1.x+1, pos2.x-1 do
+                self.setCursorPos(j,i)
+                self.write(" ")
+            end
+        end
+    end
 end
 
 --- set the color palette of the monitor

@@ -25,15 +25,14 @@ local peripheralsSerializedJson = file.readAll()
 file.close()
 if peripheralsSerializedJson == "" or not peripheralsSerializedJson then
     peripheralsSerializedJson = textutils.serialiseJSON({
-        extensions      = {},
-        computers       = {},
-        commands        = {},
-        drives          = {},
-        modems          = {},
-        monitors        = {},
-        printers        = {},
-        redstone_relays = {},
-        speakers        = {}
+        computer       = {},
+        command        = {},
+        drive          = {},
+        modem          = {},
+        monitor        = {},
+        printer        = {},
+        redstone_relay = {},
+        speaker        = {}
     })
 end
 local peripheralsUnserializedJson = textutils.unserializeJSON(peripheralsSerializedJson) or CA.logger.crash("Unable to unserialize the connected peripherals file at "..CA.paths.peripherals)

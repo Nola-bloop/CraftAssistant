@@ -26,7 +26,7 @@ CA = {
         lime        = "B8DE5D",
         pink        = "FFDCEB",
         gray        = "283454",
-        lightGray   = "557891",
+        lightGray   = "4A608F",
         cyan        = "99C2DE",
         purple      = "5D4870",
         blue        = "AFECFF",
@@ -35,6 +35,7 @@ CA = {
         red         = "FFAEAE",
         black       = "1A1429",
     },
+    --peripherals = {}  (declared in startca.lua)
 
     --addons
     addons = {
@@ -52,3 +53,5 @@ CA = {
 CA.ver = CA.version
 CA.log = CA.logger
 CA.tools = CA.toolkit
+
+--peripherals

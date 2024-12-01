@@ -1,3 +1,71 @@
+--[[
+    peripheral structure:
+    CA.peripherals = {
+        "modem" = {
+            modem_01 = {
+                connected = true,
+                ...
+            }
+            modem_02 = {...}
+        }
+        "monitor" = {
+            monitor_01 = {...}
+        }
+    }
+]]
+
+local newLine
+
+local function scan()
+    --get all sides
+    local usedSides = {}
+    for type, peripheral in pairs(CA.peripherals) do
+        for side, _ in pairs(peripheral) do
+            table.insert(side)
+        end
+    end
+
+    --scan sides
+    local scanned = peripheral.getNames()
+
+    
+    for k, v in pairs(usedSides) do
+        --set connected peripherals to connected and vice-versa
+        if not CA.tools.contains(scanned) then
+             usedSides[k].connected = false
+        else usedSides[k].connected = true end
+    end
+
+    local newPeripherals = {}
+    for k, v in pairs(scanned) do
+        if not CA.tools.contains(usedSides) and v ~= CA.mainMonitor and #{peripheral.getType(v)} == 1 then --don't count already paired deviced, main monitor and peripheral network connector
+            table.insert(newPeripherals, v)
+        end
+    end
+    CA.monitor:drawBox(
+            {x=1, y=newLine},
+            {x=18, y=newLine+1+#newPeripherals},
+            colors.purple,
+            false,
+            colors.lightBlue
+        )
+    CA.monitor:writeAt(
+        "unknown devices",
+        {x=1, y=newLine},
+        colors.lime,
+        colors.purple
+    )
+    for k, v in pairs(newPeripherals) do
+        CA.monitor:writeAt(
+            v,
+            {x=2, y=newLine+k},
+            colors.green,
+            colors.lightBlue
+        )
+    end
+
+end
+
 return {
     --- Create the function table and assign the default values
     setup = function()
@@ -11,10 +79,11 @@ return {
     end,
     print = function()
         local menus = CA.GUI.peripherals.options
+        newLine = CA.monitor.workspace.y+1
     
         CA.monitor:drawBox(
-            {x=1, y=3},
-            {x=20,y=4+#menus},
+            {x=1, y=newLine},
+            {x=18, y=newLine+1+#menus},
             colors.lightGray,
             true
         )
@@ -54,6 +123,10 @@ return {
                 }
             end
         end 
+        newLine = newLine+1+#menus+1
+
         CA.GUI.appendDirectory = CA.GUI.peripherals.options[CA.GUI.peripherals.option]
+
+        if CA.GUI.peripherals.options[CA.GUI.peripherals.option] == "Scan" then scan() end
     end
 }
