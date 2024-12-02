@@ -35,6 +35,52 @@ CA = {
         red         = "FFAEAE",
         black       = "1A1429",
     },
+
+    --functions
+    reboot = function()
+        CA.logger.warn("Command line triggered a controlled reboot.")
+        CA.monitor:fullClear(colors.black)
+        local msg = "Computer is rebooting..."
+        CA.monitor:writeAt(
+            msg,
+            {x=CA.monitor.mid.x-string.len(msg)/2, y=CA.monitor.mid.y},
+            colors.lightGray,
+            colors.black
+        )
+        CA.monitor:writeAt(
+            "Craft Assistant V"..CA.ver,
+            {x=CA.monitor.size.x, y=CA.monitor.size.y},
+            colors.lightGray,
+            colors.black,
+            nil,
+            true
+        )
+        os.sleep(1)
+        os.reboot()
+    end,
+
+    shutdown = function()
+        CA.logger.warn("Command line triggered a controlled shutdown.")
+        CA.monitor:fullClear(colors.black)
+        local msg = "Computer is off"
+        CA.monitor:writeAt(
+            msg,
+            {x=CA.monitor.mid.x-string.len(msg)/2, y=CA.monitor.mid.y},
+            colors.lightGray,
+            colors.black
+        )
+        CA.monitor:writeAt(
+            "Craft Assistant V"..CA.ver,
+            {x=CA.monitor.size.x, y=CA.monitor.size.y},
+            colors.lightGray,
+            colors.black,
+            nil,
+            true
+        )
+        os.sleep(1)
+        os.shutdown()
+    end,
+
     --peripherals = {}  (declared in startca.lua)
 
     --addons

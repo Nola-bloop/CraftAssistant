@@ -59,9 +59,29 @@ local function scan()
         CA.monitor:writeAt(
             v,
             {x=2, y=newLine+k},
-            colors.green,
+            colors.gray,
             colors.lightBlue
         )
+
+        CA.monitor:writeAt(
+            "+",
+            {x=17, y=newLine+k},
+            colors.lightBlue,
+            colors.gray
+        )
+
+        CA.GUI.clickables["peripheral_pair_"..v] = {
+            x1 = 17,
+            x2 = 17,
+            y1 = newLine+k,
+            y2 = newLine+k,
+            click = function()
+                --add peripheral to CA.peripherals
+                CA.peripherals[peripheral.getType(v)][v] = {
+                    connected = true
+                }
+            end
+        }
     end
 
 end

@@ -12,12 +12,10 @@ local function start()
             print("Craft Assistant V"..CA.ver)
         end,
         reboot = function(self)
-            CA.logger.warn("Command line triggered a controlled reboot.")
-            os.reboot()
+            CA.reboot()
         end,
         shutdown = function(self)
-            CA.logger.warn("Command line triggered a controlled shutdown.")
-            os.shutdown()
+            CA.shutdown()
         end,
         ["factory reset"] = function(self)
             print("Resetting Craft Assistant to factory settings...")

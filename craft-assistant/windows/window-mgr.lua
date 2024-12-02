@@ -14,7 +14,7 @@ CA.GUI = {
     tabs = {},
     currentTab = 2,
     clickables = {
-        --obj = {type, x1, y1, x2, y2, click()}
+        --obj = {x1, y1, x2, y2, click()}
     },
     appendDirectory = "";
 
