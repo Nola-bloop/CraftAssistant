@@ -9,9 +9,16 @@ CA = {
         local time = os.epoch(locale) / 1000
         return os.date("%A %d %B %Y",time)
     end,
+
+
+
+
     --depencies
     logger = require("craft-assistant.libraries.logger"),
     toolkit = require("craft-assistant.libraries.toolkit"),
+
+
+
 
     --Constant variables (only refresh on reboot (maybe))
     mainMonitor = "top", --side
@@ -36,6 +43,9 @@ CA = {
         black       = "1A1429",
     },
 
+
+
+
     --functions
     reboot = function()
         CA.logger.warn("Command line triggered a controlled reboot.")
@@ -55,7 +65,6 @@ CA = {
             nil,
             true
         )
-        os.sleep(1)
         os.reboot()
     end,
 
@@ -80,6 +89,16 @@ CA = {
         os.sleep(1)
         os.shutdown()
     end,
+
+    saveJson = function()
+        local json = textutils.serialiseJSON(CA.peripherals)
+        local file = fs.open(CA.paths.peripherals, "w")
+        file.write(json)
+        file.flush()
+        file.close()
+    end,
+
+
 
     --peripherals = {}  (declared in startca.lua)
 

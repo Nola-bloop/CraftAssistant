@@ -3,9 +3,11 @@
 
     window manager...
 ]]
-CA.monitor:setColorPalette(CA.colorPalette)
-CA.monitor.setTextScale(CA.monitorScale)
-
+local function setup()
+    CA.monitor:setColorPalette(CA.colorPalette)
+    CA.monitor.setTextScale(CA.monitorScale)
+end
+setup()
 --GUI variables
 CA.GUI = {
     --"globals"
@@ -39,6 +41,7 @@ end
 local windows = require("craft-assistant.libraries.window-manager-lib")
 
 local function refresh()
+
     --clear buttons
     CA.GUI.clickables = {}
 
@@ -62,8 +65,46 @@ local function refresh()
         require("craft-assistant.windows.partials.footer")()
     --</page>
 
-    local event, side, x, y = os.pullEvent("monitor_touch")
-    windows.touch({x=x,y=y})
+    local parallels = {
+        listener = function()
+            repeat
+                local happy = true
+                local event, side, arg1, arg2 = os.pullEventRaw()
+                if event == "monitor_touch" and side == CA.mainMonitor then
+                    --event, side, x, y
+                    windows.touch({x=arg1,y=arg2})
+                elseif event == "monitor_resize" and side == CA.mainMonitor then
+                    --event
+                    CA.monitor.refresh = true
+                elseif event == "peripheral" then
+                    --event, side
+                    if CA.peripherals[peripheral.getType(side)][side] ~= nil then
+                        CA.peripherals[peripheral.getType(side)][side].connected = true
+                    end
+                    CA.monitor.refresh = true
+                elseif event == "peripheral_detach" then
+                    --event, side
+                    CA.monitor.refresh = true
+                elseif event == "terminate" then
+                    CA.log.warn("Someone terminated the Craft Assistant program. Rebooting the PC instead.")
+                    CA.reboot()
+                else
+                    happy = false
+                end
+            until happy
+            CA.log.debug("Exitted listener")
+        end,
+        skip = function()
+            repeat
+                os.sleep(0.1)
+            until CA.monitor.refresh
+            CA.monitor.refresh = false
+            setup()
+            CA.monitor:setup()
+        end
+    }
+
+    parallel.waitForAny(parallels.listener, parallels.skip)
 end
 
 while true do

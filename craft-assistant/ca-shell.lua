@@ -20,6 +20,9 @@ local function start()
         ["factory reset"] = function(self)
             print("Resetting Craft Assistant to factory settings...")
             require("craft-assistant.factory-reset")
+        end,
+        refresh = function()
+            CA.monitor.refresh = true
         end
     }
 

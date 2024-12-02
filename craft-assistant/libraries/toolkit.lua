@@ -80,13 +80,17 @@ return  {
 
     
     --- find a value in a table.
+    --- return false if not found, table is nil or needle is nil
     ---@param table table @the table to run through
     ---@param needle any @the value to find
-    ---@return any, nil @the index of the value
+    ---@return any, boolean @the index of the value
     contains = function(table, needle)
+        if not table    then return false end
+        if not needle   then return false end
+
         for k, v in pairs(table) do
             if needle == v then return k end
         end
-        return
+        return false
     end
 }

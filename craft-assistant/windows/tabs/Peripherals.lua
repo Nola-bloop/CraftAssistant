@@ -20,8 +20,10 @@ local function scan()
     --get all sides
     local usedSides = {}
     for type, peripheral in pairs(CA.peripherals) do
-        for side, _ in pairs(peripheral) do
-            table.insert(side)
+        if #peripheral ~= 0 then
+            for side, _ in pairs(peripheral) do
+                table.insert(usedSides, side)
+            end 
         end
     end
 
@@ -31,17 +33,19 @@ local function scan()
     
     for k, v in pairs(usedSides) do
         --set connected peripherals to connected and vice-versa
-        if not CA.tools.contains(scanned) then
+        if not CA.tools.contains(scanned, v) and #v ~= 0 then
              usedSides[k].connected = false
-        else usedSides[k].connected = true end
+        elseif #v ~= 0 then usedSides[k].connected = true end
     end
 
     local newPeripherals = {}
     for k, v in pairs(scanned) do
-        if not CA.tools.contains(usedSides) and v ~= CA.mainMonitor and #{peripheral.getType(v)} == 1 then --don't count already paired deviced, main monitor and peripheral network connector
+        if CA.peripherals[peripheral.getType(v)][v] == nil and v ~= CA.mainMonitor and #{peripheral.getType(v)} == 1 then --don't count already paired deviced, main monitor and peripheral network connector
             table.insert(newPeripherals, v)
         end
     end
+
+    if #newPeripherals == 0 then table.insert(newPeripherals, "None found.") end
     CA.monitor:drawBox(
             {x=1, y=newLine},
             {x=18, y=newLine+1+#newPeripherals},
@@ -62,13 +66,14 @@ local function scan()
             colors.gray,
             colors.lightBlue
         )
-
-        CA.monitor:writeAt(
-            "+",
-            {x=17, y=newLine+k},
-            colors.lightBlue,
-            colors.gray
-        )
+        if v ~= "None found." then
+            CA.monitor:writeAt(
+                "+",
+                {x=17, y=newLine+k},
+                colors.lightBlue,
+                colors.gray
+            ) 
+        end
 
         CA.GUI.clickables["peripheral_pair_"..v] = {
             x1 = 17,
@@ -80,10 +85,12 @@ local function scan()
                 CA.peripherals[peripheral.getType(v)][v] = {
                     connected = true
                 }
+
+                --update json
+                CA.saveJson()
             end
         }
     end
-
 end
 
 return {

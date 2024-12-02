@@ -31,6 +31,7 @@ return {
                     y2=CA.monitor.workspace.y+i,
                     click = function()
                         CA.GUI.currentTab = i
+                        CA.GUI.showTabs = false
                     end
                 }
             end 

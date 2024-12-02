@@ -3,9 +3,10 @@
 
     Monitor module add-on that adds some functions to ease manipulation
 
-    usage:
+    example:
         local monitor = CA.tools.addon(peripheral.find("monitor"), CA.addons.monitor)
         monitor:fullClear(colors.white)
+    --it's important to use ":" to call the functions to send the "self" parameter
         
 ]]
 
