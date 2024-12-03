@@ -20,6 +20,15 @@ function module.setup(object)
     object.size.x, object.size.y = object.getSize()
     object.mid.x = object.size.x/2
     object.mid.y = object.size.y/2
+    object.workspace = {}
+    object.workspace.x = {}
+    for i = 1, object.size.x+6/21 do
+        if i == 1 then
+            table.insert(object.workspace.x, i*21-20)
+        else
+            table.insert(object.workspace.x, i*21-20-3)
+        end
+    end
 end
 
 --- Complete a full clear of the monitor

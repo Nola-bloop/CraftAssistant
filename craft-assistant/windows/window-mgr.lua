@@ -92,7 +92,6 @@ local function refresh()
                     happy = false
                 end
             until happy
-            CA.log.debug("Exitted listener")
         end,
         skip = function()
             repeat

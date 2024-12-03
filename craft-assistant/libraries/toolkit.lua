@@ -92,5 +92,15 @@ return  {
             if needle == v then return k end
         end
         return false
+    end,
+
+    --- classic math.clamp
+    ---@param val number @value to clamp
+    ---@param min number @min value
+    ---@param max number @max value
+    clamp = function(val, min, max)
+        if val < min then return min
+        elseif val > max then return max
+        else return val end
     end
 }

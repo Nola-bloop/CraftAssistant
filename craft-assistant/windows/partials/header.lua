@@ -2,10 +2,10 @@
 return function()
     if (string.len("Craft Assistant V"..CA.ver)+string.len(CA.date()) > CA.monitor.size.x) then
         CA.monitor:drawBox({x=1,y=1},{x=CA.monitor.size.x,y=2}, colors.black)
-        CA.monitor.workspace = {x = 1, y=3}
+        CA.monitor.workspace.y=3
     else
         CA.monitor:drawBox({x=1,y=1},{x=CA.monitor.size.x,y=1}, colors.black)
-        CA.monitor.workspace = {x = 1, y=2}
+        CA.monitor.workspace.y=2
     end
     
     --write CA version
@@ -26,7 +26,16 @@ return function()
         CA.monitor.size.x-CA.monitor.mid.x, 
         true
     )
-    
+    --bg
+    for i = 0, CA.monitor.size.x+6/21 do
+        if i%2 == 1 then
+            CA.monitor:drawBox(
+                {x=i*21-20-3, y=CA.monitor.workspace.y},
+                {x=i*21-3, y=CA.monitor.size.y},
+                colors.green
+            ) 
+        end
+    end
     --write the '>' for the tabs
     CA.monitor:writeAt(
         ">",

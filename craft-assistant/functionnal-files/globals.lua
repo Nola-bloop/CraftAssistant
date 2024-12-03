@@ -38,7 +38,7 @@ CA = {
         purple      = "5D4870",
         blue        = "AFECFF",
         brown       = "7F6A5B",
-        green       = "636E64",
+        green       = "202942",
         red         = "FFAEAE",
         black       = "1A1429",
     },
