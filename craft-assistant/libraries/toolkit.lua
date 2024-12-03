@@ -102,5 +102,22 @@ return  {
         if val < min then return min
         elseif val > max then return max
         else return val end
+    end,
+
+    --- Extract the type of a peripheral in a peripheral network
+    ---@param side string @the side to extract
+    ---@return string @the extracted peripheral type
+    extractType = function(side)
+        local last_ = nil
+        for i = 1, string.len(side) do
+            local char = string.sub(side, i,i)
+            if char == "_" then last_ = i end
+        end
+
+        if not last_ then 
+            return nil
+        else 
+            return string.sub(side, 1, last_-1) 
+        end
     end
 }

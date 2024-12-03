@@ -84,6 +84,10 @@ local function refresh()
                     CA.monitor.refresh = true
                 elseif event == "peripheral_detach" then
                     --event, side
+                    local type = CA.tools.extractType(side)
+                    if type ~= nil then
+                        CA.peripherals[type][side].connected = false
+                    end
                     CA.monitor.refresh = true
                 elseif event == "terminate" then
                     CA.log.warn("Someone terminated the Craft Assistant program. Rebooting the PC instead.")

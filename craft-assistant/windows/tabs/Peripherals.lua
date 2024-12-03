@@ -88,7 +88,7 @@ local function scan()
                     1,
                     #newPeripherals
                     )
-                )
+            )
         end
     }
     CA.GUI.clickables["scan_cursor_increment"] = {
@@ -106,11 +106,21 @@ local function scan()
                     1,
                     #newPeripherals
                     )
-                )
+            )
         end
     }
-    
-
+    if CA.monitor.refresh then
+        CA.GUI.peripherals.scan_cursor = 
+            CA.tools.clamp(
+                CA.GUI.peripherals.scan_cursor + 1, 
+                1, 
+                CA.tools.clamp(
+                    #newPeripherals- (CA.monitor.size.y- 3 - newLine), 
+                    1,
+                    #newPeripherals
+                    )
+            )
+    end
 
 
     for k, v in pairs(newPeripherals) do
