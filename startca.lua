@@ -11,14 +11,26 @@ require("craft-assistant.functionnal-files.globals")
 
 
 
-
 --init        
-CA.logger.notice("Starting Craft Assistant")      
+CA.logger.notice("Starting Craft Assistant")     
+
+
+
+
 --find monitor and apply monitor add-on
-CA.monitor = CA.tools.addon(peripheral.wrap(CA.mainMonitor), CA.addons.monitor) 
+CA.monitorWrap = CA.tools.addon(peripheral.wrap(CA.mainMonitor), CA.addons.window)
     or CA.logger.warn("No monitor found. Running CLI.")
+CA.monitor = window.create(CA.monitorWrap, 1, 1, CA.monitorWrap.size.x, CA.monitorWrap.size.y)
+    or CA.logger.warn("No monitor found. Running CLI.")
+CA.tools.addon(CA.monitor, CA.addons.window)
 --add monitor addon to terminal
 CA.tools.addon(term, CA.addons.monitor)
+
+--do same for term
+CA.tools.addon(term, CA.addons.window)
+
+
+
 --load peripherals
 local file = fs.open(CA.paths.peripherals, "r") or CA.log.crash("Unable to read the peripheral file at "..CA.paths.peripherals)
 local peripheralsSerializedJson = file.readAll()
@@ -41,6 +53,9 @@ local file = fs.open(CA.paths.peripherals, "w") or CA.log.crash("Unable to write
 file.write(peripheralsSerializedJson)
 file.flush()
 file.close()
+
+
+
 
 --start GUI/CLI
 term.clear()

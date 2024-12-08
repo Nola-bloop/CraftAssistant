@@ -14,7 +14,10 @@ local module = {}
 
 --- give the module constants
 ---@param object object @should be self (target)
-function module.setup(object)
+function module.setup(object, parent)
+    parent = parent or peripheral.wrap(CA.mainMonitor)
+
+    object.parent = parent
     object.size = {}
     object.mid = {}
     object.size.x, object.size.y = object.getSize()
@@ -68,7 +71,9 @@ function module.writeAt(self, text, pos, textColor, bgColor, wrap, pointToEnd)
     end
 
     if bgColor then self.setBackgroundColor(bgColor) end
-    if textColor then self.setTextColor(textColor) end
+    if textColor then self.setTextColor(textColor) 
+    
+    end
     self.setCursorPos(pos.x, pos.y)
     if wrap ~= nil and wrap < string.len(text) then
         local fractions = {}
@@ -92,7 +97,15 @@ function module.writeAt(self, text, pos, textColor, bgColor, wrap, pointToEnd)
             else
                 self.setCursorPos(pos.x,pos.y-1+i)
             end
-            self.write(fractions[i])
+            if not textColor then
+                for i = 1, string.len(text) do
+                    local x, y = self.getCursorPos()
+                    local col = self.getBackgroundColor()
+                    self.write(string.sub(text, i,i))
+                end
+            else
+                self.write(fractions[i])
+            end
         end
     else
         self.write(text)

@@ -164,6 +164,117 @@ local function scan()
         end
     end
 end
+local function manage()
+    local peripherals = {}
+
+    for type, list in pairs(CA.peripherals) do
+        for side, data in pairs(list) do
+            table.insert(peripherals, side)
+        end
+    end 
+
+    if #peripherals == 0 then table.insert(peripherals, "None found.") end
+    CA.monitor:drawBox(
+            {x=1, y=newLine},
+            {x=18, y=CA.monitor.size.y-1},
+            colors.purple,
+            false,
+            colors.lightBlue
+    )
+    CA.monitor:writeAt(
+        "Paired devices",
+        {x=1, y=newLine},
+        colors.lime,
+        colors.purple
+    )
+
+    --up&down
+    CA.monitor:writeAt(
+        "^",
+        {x=1, y=newLine+1},
+        colors.lime,
+        colors.purple
+    )
+    CA.monitor:writeAt(
+        "v",
+        {x=1, y=newLine+2},
+        colors.lime,
+        colors.purple
+    )
+    CA.GUI.clickables["scan_cursor_decrement"] = {
+        x1 = 1,
+        x2 = 1,
+        y1 = newLine+1,
+        y2 = newLine+1,
+        click = function()
+            CA.GUI.peripherals.scan_cursor = 
+            CA.tools.clamp(
+                CA.GUI.peripherals.scan_cursor - 1, 
+                1, 
+                CA.tools.clamp(
+                    #peripherals- (CA.monitor.size.y- 3 - newLine), 
+                    1,
+                    #peripherals
+                    )
+            )
+        end
+    }
+    CA.GUI.clickables["scan_cursor_increment"] = {
+        x1 = 1,
+        x2 = 1,
+        y1 = newLine+2,
+        y2 = newLine+2,
+        click = function()
+            CA.GUI.peripherals.scan_cursor = 
+            CA.tools.clamp(
+                CA.GUI.peripherals.scan_cursor + 1, 
+                1, 
+                CA.tools.clamp(
+                    #peripherals- (CA.monitor.size.y- 3 - newLine), 
+                    1,
+                    #peripherals
+                    )
+            )
+        end
+    }
+
+    for k, v in pairs(peripherals) do
+        if k >= CA.GUI.peripherals.scan_cursor and k+1-CA.GUI.peripherals.scan_cursor < CA.monitor.size.y - 1 - newLine then
+            local y = newLine+k-CA.GUI.peripherals.scan_cursor+1
+            if v == CA.GUI.peripherals.manage.selected then
+                CA.monitor:drawBox(
+                    {x=2, y=y},
+                    {x=17, y=y},
+                    colors.gray
+                )
+                CA.monitor:writeAt(
+                    v,
+                    {x=2, y=y},
+                    colors.lightGray,
+                    colors.gray
+                )
+            else
+                CA.monitor:writeAt(
+                    v,
+                    {x=2, y=y},
+                    colors.gray,
+                    colors.lightBlue
+                )
+            end
+
+            CA.GUI.clickables["peripheral_pair_"..v] = {
+                x1 = 2,
+                x2 = 17,
+                y1 = y,
+                y2 = y,
+                click = function()
+                    CA.GUI.peripherals.manage.selected = v;
+                    print(v)
+                end
+            }
+        end
+    end
+end
 
 return {
     --- Create the function table and assign the default values
@@ -174,7 +285,8 @@ return {
                 [1] = "Scan",
                 [2] = "Manage"
             },
-            scan_cursor = 1
+            scan_cursor = 1,
+            manage = {}
         }
     end,
     print = function()
@@ -228,6 +340,7 @@ return {
 
         CA.GUI.appendDirectory = CA.GUI.peripherals.options[CA.GUI.peripherals.option]
 
-        if CA.GUI.peripherals.options[CA.GUI.peripherals.option] == "Scan" then scan() end
+        if CA.GUI.peripherals.options[CA.GUI.peripherals.option] == "Scan" then scan() 
+        elseif CA.GUI.peripherals.options[CA.GUI.peripherals.option] == "Manage" then manage() end
     end
 }

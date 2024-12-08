@@ -5,7 +5,7 @@
 ]]
 local function setup()
     CA.monitor:setColorPalette(CA.colorPalette)
-    CA.monitor.setTextScale(CA.monitorScale)
+    CA.monitor.parent.setTextScale(CA.monitorScale)
 end
 setup()
 --GUI variables

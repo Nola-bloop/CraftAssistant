@@ -104,7 +104,7 @@ CA = {
 
     --addons
     addons = {
-        monitor = require("craft-assistant.libraries.addons.monitor-addon")
+        window = require("craft-assistant.libraries.addons.window-addon")
     },
 
     paths = {
